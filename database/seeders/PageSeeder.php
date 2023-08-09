@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Story;
+use App\Models\Page;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class StorySeeder extends Seeder
+class PageSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Story::factory()->count(10)->create();
+        Page::factory()->count(100)->create();
     }
 }
