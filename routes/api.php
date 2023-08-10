@@ -41,6 +41,8 @@ Route::post('/addBook', function (Request $request) {
     $book = new Book;
     $book->name = $request->name;
     $book->content = $request->content;
+    $book->isActive = $request->isActive;
+    $book->coin = $request -> coin;
     $book->save();
     return response()->json($book, 201);
 });

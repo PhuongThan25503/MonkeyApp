@@ -8,15 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('text_config', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('text_id');
-            $table->foreign('text_id')->references('text_id')->on('text');
-            $table->unsignedBigInteger('page_id');
-            $table->foreign('page_id')->references('page_id')->on('page');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('text_id')->index('text_config_text_id_foreign');
+            $table->unsignedBigInteger('page_id')->index('text_config_page_id_foreign');
             $table->string('position');
             $table->timestamps();
         });
@@ -24,8 +24,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('text_config');
     }

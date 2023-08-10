@@ -45,6 +45,8 @@ class BookController extends Controller
 //        echo "Name: " . $name . "<br>";
 //        echo "Content: " . $content;
         //Book::create($book);
+        $book->isActive = 0;
+        $book->coin = 10;
         $this->bookRepository->createBook($book);
         return redirect('/');
     }

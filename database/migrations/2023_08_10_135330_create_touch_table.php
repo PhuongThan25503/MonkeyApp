@@ -8,15 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('touch', function (Blueprint $table) {
-            $table->unsignedBigInteger('touch_id',true);
-            $table->unsignedBigInteger('page_id');
-            $table->foreign('page_id')->references('page_id')->on('page');
-            $table->unsignedBigInteger('text_id');
-            $table->foreign('text_id')->references('text_id')->on('text');
+            $table->bigIncrements('touch_id');
+            $table->unsignedBigInteger('page_id')->index('touch_page_id_foreign');
+            $table->unsignedBigInteger('text_id')->index('touch_text_id_foreign');
             $table->string('data');
             $table->timestamps();
         });
@@ -24,8 +24,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('touch');
     }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\TextConfig;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            TypeSeeder::class,
+            AuthorSeeder::class,
+            StorySeeder::class,
+            PageSeeder::class,
+            TextSeeder::class,
+            AudioSeeder::class,
+            TextConfigSeeder::class,
+            TouchSeeder::class,
+        ]);
     }
 }

@@ -8,15 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('story', function (Blueprint $table) {
-            $table->unsignedBigInteger('story_id', true);
-            $table->unsignedBigInteger('author_id');
-            $table->foreign('author_id')->references('author_id')->on('author');
-            $table->unsignedBigInteger('type_id');
-            $table->foreign('type_id')->references('type_id')->on('type');
+            $table->bigIncrements('story_id');
+            $table->unsignedBigInteger('author_id')->index('story_author_id_foreign');
+            $table->unsignedBigInteger('type_id')->index('story_type_id_foreign');
             $table->string('name');
             $table->string('thumbnail');
             $table->integer('coin');
@@ -27,8 +27,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('story');
     }

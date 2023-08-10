@@ -8,22 +8,26 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('page', function (Blueprint $table) {
-            $table->unsignedBigInteger('page_id',true);
-            $table->unsignedBigInteger('story_id');
-            $table->foreign('story_id')->references('story_id')->on('story');
+            $table->bigIncrements('page_id');
+            $table->unsignedBigInteger('story_id')->index('page_story_id_foreign');
             $table->string('background');
             $table->timestamps();
+            $table->integer('page_num');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('page');
     }

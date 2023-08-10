@@ -8,23 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('author', function (Blueprint $table) {
-            $table->unsignedBigInteger('author_id', true);
-            $table->string('name');
-            $table->date('DOB');
-            $table->boolean('gender');
+        Schema::create('text', function (Blueprint $table) {
+            $table->bigIncrements('text_id');
+            $table->string('text');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('author');
+        Schema::dropIfExists('text');
     }
 };

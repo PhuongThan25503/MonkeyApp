@@ -23,6 +23,8 @@ class Book extends Model
         'content',
         'image',
         'date',
+        'isActive',
+        'coin',
     ];
 
     // The attributes that should be cast to native types

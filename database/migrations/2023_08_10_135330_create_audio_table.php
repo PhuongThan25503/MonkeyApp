@@ -8,23 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('audio', function (Blueprint $table) {
-            $table->unsignedBigInteger('audio_id',true);
+            $table->bigIncrements('audio_id');
             $table->string('audio');
             $table->timestamps();
-        });
-        Schema::table('text', function(Blueprint $table){
-            $table->foreign('audio_id')->references('audio_id')->on('audio');
+            $table->unsignedBigInteger('text_id')->nullable()->index('audio_text_id_foreign');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('audio');
     }
