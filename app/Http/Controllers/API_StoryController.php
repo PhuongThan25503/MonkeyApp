@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Story;
 use App\Http\Controllers\Controller;
+use App\Repositories\StoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class API_StoryController extends Controller
@@ -11,9 +12,16 @@ class API_StoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public $StoryRepository;
+
+    public function __construct(StoryRepositoryInterface $StoryRepository){
+        $this->StoryRepository=$StoryRepository;
+    }
+
     public function index()
     {
-        return Story::all();
+        $story = $this->StoryRepository->getAllStory();
+        return response()->json($story);
     }
 
     /**
@@ -27,9 +35,10 @@ class API_StoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Story $story)
+    public function show($id)
     {
-        //
+        $story = $this->StoryRepository->getStoryById($id);
+        return response()->json($story);
     }
 
     /**

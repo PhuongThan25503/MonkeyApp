@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API_StoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Book;
@@ -59,3 +60,9 @@ Route::put('/books/{id}', function (Request $request) {
     }
 });
 
+//Below are APIs for main project
+
+//get all story
+Route::get('getAllStory', [API_StoryController::class, 'index']);
+//get story by id
+Route::get('getStoryById/{id}', [API_StoryController::class, 'show']);

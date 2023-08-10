@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Story;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
 
@@ -16,17 +17,17 @@ class StoryRepository extends BaseRepository implements StoryRepositoryInterface
      */
     public function model()
     {
-        //return YourModel::class;
+        return Story::class;
     }
 
     public function getAllStory()
     {
-        // TODO: Implement getAllStory() method.
+        return Story::all();
     }
 
     public function getStoryById($id)
     {
-        // TODO: Implement getStoryById() method.
+        return Story::find($id);
     }
 
     public function createStory($data)
