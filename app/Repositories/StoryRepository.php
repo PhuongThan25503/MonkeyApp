@@ -30,15 +30,19 @@ class StoryRepository extends BaseRepository implements StoryRepositoryInterface
         return Story::find($id);
     }
 
-    public function createStory($data)
+    public function createStory($story)
     {
-        // TODO: Implement createStory() method.
+        return Story::create($story->toArray());
     }
 
     public function updateStory($id, $data)
     {
-        // TODO: Implement updateStory() method.
+        $story = Story::find($id);
+        return $story->update($data->toArray());
     }
 
-
+    public function deleteStoryById($id){
+        $story = Story::find($id);
+        Story::destroy($id);
+    }
 }

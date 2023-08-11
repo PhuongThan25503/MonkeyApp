@@ -6,5 +6,5 @@ Interface StoryRepositoryInterface{
     public function getStoryById($id);
     public function createStory($data);
     public function updateStory($id, $data);
-    public function deleteById($id);
+    public function deleteStoryById($id);
 }

@@ -30,6 +30,6 @@ class Story extends Model
     }
 
     public function Page(): HasMany{ // one story has many pages
-        return $this->hasMany(Page::class,'page_id');//for default, it's author_id , but I still write for clearance
+        return $this->hasMany(Page::class,'story_id');//for default, it's author_id , but I still write for clearance
     }
 }
