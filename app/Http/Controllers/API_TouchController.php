@@ -14,16 +14,15 @@ class API_TouchController extends Controller
      */
     public $TouchRepository;
 
-    public function __construct(TouchRepositoryInterface $TouchRepository){
-        $this->TouchRepository = $TouchRepository;
+    public function __construct(TouchRepositoryInterface $TouchRepository)
+    {
+        return $this->TouchRepository = $TouchRepository;
     }
+
     public function index()
     {
-        $touch = $this->TouchRepository->getAllTouch();
-        return response()->json([
-            'touch'=>$touch,
-            'message' => 'Get successfully',
-        ], 200);
+        $Touch= $this->TouchRepository->getAllTouch();
+        return response()->json($Touch, 200);
     }
 
     /**
@@ -31,14 +30,10 @@ class API_TouchController extends Controller
      */
     public function store(Request $request)
     {
-        $touch = new Touch;
-        $touch->page_id = $request->page_id;
-        $touch->text_id = $request->text_id;
-        $touch->data = $request->data;
-        $this->TouchRepository->createTouch($touch);
-        return response()->json([
-            'message' => 'touch inserted',
-        ],200);
+        $Touch = new Touch();
+        $Touch->Touch;
+        $this->TouchRepository->createTouch($Touch);
+        return response($Touch,200);
     }
 
     /**
@@ -46,8 +41,15 @@ class API_TouchController extends Controller
      */
     public function show($id)
     {
-        $touch = $this->TouchRepository->getTouchById($id);
-        return response($touch,200);
+        $Touch = $this->TouchRepository->getTouchById($id);
+        if($Touch){//exist
+            return response()->json($Touch, 200);
+        }
+        else{
+            return response()->json([
+                'message' => 'not found Touch'
+            ], 404);
+        }
     }
 
     /**
@@ -55,31 +57,23 @@ class API_TouchController extends Controller
      */
     public function update(Request $request)
     {
-        //get id
-        $id = $request->touch_id;
-
         //validate
         $request->validate([
-            'touch_id' => 'required',
+            'Touch_id' => 'required'
         ]);
 
+        $id = $request->Touch_id;
+
         //check exist
-        $exist = Touch::find($id);
+        $exist = $this->TouchRepository->getTouchById($id);
 
         if($exist){
-            //make a touch
-            $touch = Touch::make($request->all());
-
-            //update
-            $this->TouchRepository->updateTouch($id, $touch);
-
-            //return
+            $Touch = Touch::make($request->all());
+            $this->TouchRepository->updateTouch($id, $Touch);
             return response()->json([
-                'new_data' => $this->TouchRepository->getTouchById($id),
-                'message' => 'Data updated',
-            ],200);
-        }
-        else{
+                'Touch'=>$this->TouchRepository->getTouchById($id)
+            ], 200);
+        }else{
             return response()->json([
                 'message' => 'Touch not found'
             ], 404);
@@ -93,25 +87,23 @@ class API_TouchController extends Controller
     {
         //validate
         $request->validate([
-            'touch_id' => 'required'
+            'Touch_id' => 'required'
         ]);
 
-        $id = $request->touch_id;
+        $id = $request->Touch_id;
 
-        //check if touch exist
-        $touch = $this->TouchRepository->getTouchById($id);
+        //check exist
+        $Touch = $this->TouchRepository->getTouchById($id);
 
-        if($touch){
-            $this->TouchRepository->deleteTouchById($request->touch_id);
+        if($Touch){
+            $this->TouchRepository->deleteTouchById($id);
             return response()->json([
-                'message' => 'Touch deleted'
-            ]);
-        }
-        else{
+                'Touch deleted'
+            ], 200);
+        }else{
             return response()->json([
-               'message' => 'Touch not found'
+                'message' => 'Touch not found'
             ], 404);
         }
-
     }
 }

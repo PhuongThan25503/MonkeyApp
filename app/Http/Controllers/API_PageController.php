@@ -13,14 +13,16 @@ class API_PageController extends Controller
      * Display a listing of the resource.
      */
     public $PageRepository;
-    public function __construct(PageRepositoryInterface $PageRepository){
-        $this->PageRepository = $PageRepository;
+
+    public function __construct(PageRepositoryInterface $PageRepository)
+    {
+        return $this->PageRepository = $PageRepository;
     }
 
     public function index()
     {
-        $page = $this->PageRepository->getAllPage();
-        return response()->json($page, 200);
+        $Page= $this->PageRepository->getAllPage();
+        return response()->json($Page, 200);
     }
 
     /**
@@ -28,15 +30,10 @@ class API_PageController extends Controller
      */
     public function store(Request $request)
     {
-        $page = new Page();
-        $page->story_id = $request->story_id;
-        $page->background = $request->background;
-        $page->page_num = $request->page_num;
-        $this->PageRepository->createPage($page);
-        return response()->json([
-            'page' => $page,
-            'message' => 'insert successful',
-        ], 200);
+        $Page = new Page();
+        $Page->Page;
+        $this->PageRepository->createPage($Page);
+        return response($Page,200);
     }
 
     /**
@@ -44,8 +41,15 @@ class API_PageController extends Controller
      */
     public function show($id)
     {
-        $page = Page::find($id);
-        return response()->json($page, 200);
+        $Page = $this->PageRepository->getPageById($id);
+        if($Page){//exist
+            return response()->json($Page, 200);
+        }
+        else{
+            return response()->json([
+                'message' => 'not found Page'
+            ], 404);
+        }
     }
 
     /**
@@ -55,30 +59,24 @@ class API_PageController extends Controller
     {
         //validate
         $request->validate([
-            'page_id'=>'required'
+            'Page_id' => 'required'
         ]);
 
-        $id= $request->page_id;
+        $id = $request->Page_id;
 
         //check exist
-        $exist = Page::find($id);
+        $exist = $this->PageRepository->getPageById($id);
 
         if($exist){
-            //make a page
-            $page = Page::make($request->all());
-
-            //update
-            $this->PageRepository->updatePage($id, $page);
-
-            //return
+            $Page = Page::make($request->all());
+            $this->PageRepository->updatePage($id, $Page);
             return response()->json([
-                'page' => $this->PageRepository->getPageById($id),
-                'message' => 'update successfully',
-            ]);
+                'Page'=>$this->PageRepository->getPageById($id)
+            ], 200);
         }else{
             return response()->json([
-                'message' => 'page not found'
-            ],404);
+                'message' => 'Page not found'
+            ], 404);
         }
     }
 
@@ -87,26 +85,25 @@ class API_PageController extends Controller
      */
     public function destroy(Request $request)
     {
+        //validate
         $request->validate([
-           'page_id' => 'required',
+            'Page_id' => 'required'
         ]);
 
-        $id = $request->page_id;
+        $id = $request->Page_id;
 
-        //get page
-        $page= $this->PageRepository->getPageById($id);
+        //check exist
+        $Page = $this->PageRepository->getPageById($id);
 
-        //check if exist
-        if($page){
+        if($Page){
             $this->PageRepository->deletePageById($id);
             return response()->json([
-                'message' => 'delete successfully'
-            ],200);
+                'Page deleted'
+            ], 200);
         }else{
             return response()->json([
-                'message' => 'page not found'
-            ],404);
+                'message' => 'Page not found'
+            ], 404);
         }
-
     }
 }

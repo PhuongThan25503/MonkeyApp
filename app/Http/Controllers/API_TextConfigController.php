@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\TextConfig;
 use App\Http\Controllers\Controller;
-use App\Repositories\TextConfigRepository;
 use App\Repositories\TextConfigRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -15,13 +14,15 @@ class API_TextConfigController extends Controller
      */
     public $TextConfigRepository;
 
-    public function __construct(TextConfigRepositoryInterface $tCRepo){
-        return $this->TextConfigRepository = $tCRepo;
+    public function __construct(TextConfigRepositoryInterface $TextConfigRepository)
+    {
+        return $this->TextConfigRepository = $TextConfigRepository;
     }
+
     public function index()
     {
-        $TextConfig = $this->TextConfigRepository->getAllTextConfig();
-        return response($TextConfig, 200);
+        $TextConfig= $this->TextConfigRepository->getAllTextConfig();
+        return response()->json($TextConfig, 200);
     }
 
     /**
@@ -29,15 +30,10 @@ class API_TextConfigController extends Controller
      */
     public function store(Request $request)
     {
-        $textConfig = new TextConfig();
-        $textConfig->text_id = $request->text_id;
-        $textConfig->page_id = $request->page_id;
-        $textConfig->position = $request->position;
-        $this->TextConfigRepository->createTextConfig($textConfig);
-        return response()->json([
-            'textConfig' => $textConfig,
-            'message' => ' insert successfully',
-        ], 200);
+        $TextConfig = new TextConfig();
+        $TextConfig->TextConfig;
+        $this->TextConfigRepository->createTextConfig($TextConfig);
+        return response($TextConfig,200);
     }
 
     /**
@@ -45,8 +41,15 @@ class API_TextConfigController extends Controller
      */
     public function show($id)
     {
-        $textConfig = $this->TextConfigRepository->getTextConfigById($id);
-        return response()->json($textConfig, 200);
+        $TextConfig = $this->TextConfigRepository->getTextConfigById($id);
+        if($TextConfig){//exist
+            return response()->json($TextConfig, 200);
+        }
+        else{
+            return response()->json([
+                'message' => 'not found TextConfig'
+            ], 404);
+        }
     }
 
     /**
@@ -54,28 +57,25 @@ class API_TextConfigController extends Controller
      */
     public function update(Request $request)
     {
-        // Validate the request data
+        //validate
         $request->validate([
-            'id' => 'required',
+            'TextConfig_id' => 'required'
         ]);
 
-        $id= $request->id;
+        $id = $request->TextConfig_id;
 
-        // Find the tc by id
-        $exist = TextConfig::find($id);
+        //check exist
+        $exist = $this->TextConfigRepository->getTextConfigById($id);
 
-        // Update the tc with the request data
         if($exist){
-            $textConfig= TextConfig::make($request->all());
-            $this->TextConfigRepository->updateTextConfig($id,$textConfig);
-            // Return a JSON response with the updated tc
+            $TextConfig = TextConfig::make($request->all());
+            $this->TextConfigRepository->updateTextConfig($id, $TextConfig);
             return response()->json([
-                'textConfig'=>$textConfig,
-                'message' => 'Data updated',
+                'TextConfig'=>$this->TextConfigRepository->getTextConfigById($id)
             ], 200);
         }else{
             return response()->json([
-                'message' => 'Text Config not found'
+                'message' => 'TextConfig not found'
             ], 404);
         }
     }
@@ -85,26 +85,24 @@ class API_TextConfigController extends Controller
      */
     public function destroy(Request $request)
     {
-        // Validate the request data
+        //validate
         $request->validate([
-            'id' => 'required',
+            'TextConfig_id' => 'required'
         ]);
 
-        $id= $request->id;
+        $id = $request->TextConfig_id;
 
-        // Find the tc by id
-        $exist = TextConfig::find($id);
+        //check exist
+        $TextConfig = $this->TextConfigRepository->getTextConfigById($id);
 
-        // Update the tc with the request data
-        if($exist){
+        if($TextConfig){
             $this->TextConfigRepository->deleteTextConfigById($id);
-            // Return a JSON response with the updated tc
             return response()->json([
-                'message' => 'Data deleted',
+                'TextConfig deleted'
             ], 200);
         }else{
             return response()->json([
-                'message' => 'Text Config not found'
+                'message' => 'TextConfig not found'
             ], 404);
         }
     }

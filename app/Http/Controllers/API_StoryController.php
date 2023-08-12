@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Story;
 use App\Http\Controllers\Controller;
-use App\Repositories\PageRepository;
 use App\Repositories\StoryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -15,14 +14,15 @@ class API_StoryController extends Controller
      */
     public $StoryRepository;
 
-    public function __construct(StoryRepositoryInterface $StoryRepository){
-        $this->StoryRepository=$StoryRepository;
+    public function __construct(StoryRepositoryInterface $StoryRepository)
+    {
+        return $this->StoryRepository = $StoryRepository;
     }
 
     public function index()
     {
-        $story = $this->StoryRepository->getAllStory();
-        return response()->json($story);
+        $Story= $this->StoryRepository->getAllStory();
+        return response()->json($Story, 200);
     }
 
     /**
@@ -30,18 +30,10 @@ class API_StoryController extends Controller
      */
     public function store(Request $request)
     {
-        $story = new Story();
-        $story->author_id = $request->author_id;
-        $story->type_id = $request->type_id;
-        $story->name = $request->name;
-        $story->thumbnail = $request->thumbnail;
-        $story->coin = $request->coin;
-        $story->isActive = $request-> isActive;
-        $this->StoryRepository->createStory($story);
-        return response()->json([
-            'story' => $story,
-            'message' => 'Data inserted',
-        ], 201); //success
+        $Story = new Story();
+        $Story->Story;
+        $this->StoryRepository->createStory($Story);
+        return response($Story,200);
     }
 
     /**
@@ -49,8 +41,15 @@ class API_StoryController extends Controller
      */
     public function show($id)
     {
-        $story = $this->StoryRepository->getStoryById($id);
-        return response()->json($story);
+        $Story = $this->StoryRepository->getStoryById($id);
+        if($Story){//exist
+            return response()->json($Story, 200);
+        }
+        else{
+            return response()->json([
+                'message' => 'not found Story'
+            ], 404);
+        }
     }
 
     /**
@@ -58,26 +57,21 @@ class API_StoryController extends Controller
      */
     public function update(Request $request)
     {
-        // Validate the request data
+        //validate
         $request->validate([
-            'story_id' => 'required',
+            'Story_id' => 'required'
         ]);
 
-        $id = $request->story_id;
+        $id = $request->Story_id;
 
-        // Find the story by id
-        $exist = Story::find($id);
+        //check exist
+        $exist = $this->StoryRepository->getStoryById($id);
 
-        if($exist){//if exist then update
-            $story= Story::make($request->all());
-
-            // Update the story with the request data
-            $this->StoryRepository->updateStory($id,$story);
-
-            // Return a JSON response with the updated story
+        if($exist){
+            $Story = Story::make($request->all());
+            $this->StoryRepository->updateStory($id, $Story);
             return response()->json([
-                'story'=>$story,
-                'message' => 'Data updated',
+                'Story'=>$this->StoryRepository->getStoryById($id)
             ], 200);
         }else{
             return response()->json([
@@ -93,22 +87,20 @@ class API_StoryController extends Controller
     {
         //validate
         $request->validate([
-           'story_id' => 'required'
+            'Story_id' => 'required'
         ]);
 
-        $id = $request->story_id;
+        $id = $request->Story_id;
 
-        //find the story by id
-        $story = $this->StoryRepository->getStoryById($id);
+        //check exist
+        $Story = $this->StoryRepository->getStoryById($id);
 
-        //delete story
-        if ($story){
+        if($Story){
             $this->StoryRepository->deleteStoryById($id);
             return response()->json([
-                'message' => 'Story deleted successfully',
+                'Story deleted'
             ], 200);
-        }
-        else{
+        }else{
             return response()->json([
                 'message' => 'Story not found'
             ], 404);
