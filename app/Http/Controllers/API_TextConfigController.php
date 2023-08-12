@@ -31,7 +31,9 @@ class API_TextConfigController extends Controller
     public function store(Request $request)
     {
         $TextConfig = new TextConfig();
-        $TextConfig->TextConfig;
+        $TextConfig->text_id = $request->text_id;
+        $TextConfig->page_id = $request->page_id;
+        $TextConfig->position = $request->position;
         $this->TextConfigRepository->createTextConfig($TextConfig);
         return response($TextConfig,200);
     }
@@ -59,10 +61,10 @@ class API_TextConfigController extends Controller
     {
         //validate
         $request->validate([
-            'TextConfig_id' => 'required'
+            'id' => 'required'
         ]);
 
-        $id = $request->TextConfig_id;
+        $id = $request->id;
 
         //check exist
         $exist = $this->TextConfigRepository->getTextConfigById($id);
@@ -87,10 +89,10 @@ class API_TextConfigController extends Controller
     {
         //validate
         $request->validate([
-            'TextConfig_id' => 'required'
+            'id' => 'required'
         ]);
 
-        $id = $request->TextConfig_id;
+        $id = $request->id;
 
         //check exist
         $TextConfig = $this->TextConfigRepository->getTextConfigById($id);

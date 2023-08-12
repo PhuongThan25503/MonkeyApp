@@ -31,7 +31,7 @@ class API_TextController extends Controller
     public function store(Request $request)
     {
         $text = new Text();
-        $text->text;
+        $text->text = $request->text;
         $this->textRepository->createText($text);
         return response($text,200);
     }

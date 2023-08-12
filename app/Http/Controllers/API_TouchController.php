@@ -31,7 +31,9 @@ class API_TouchController extends Controller
     public function store(Request $request)
     {
         $Touch = new Touch();
-        $Touch->Touch;
+        $Touch->page_id = $request->page_id;
+        $Touch->text_id = $request ->text_id;
+        $Touch->data = $request ->data;
         $this->TouchRepository->createTouch($Touch);
         return response($Touch,200);
     }
@@ -59,10 +61,10 @@ class API_TouchController extends Controller
     {
         //validate
         $request->validate([
-            'Touch_id' => 'required'
+            'touch_id' => 'required'
         ]);
 
-        $id = $request->Touch_id;
+        $id = $request->touch_id;
 
         //check exist
         $exist = $this->TouchRepository->getTouchById($id);
@@ -87,10 +89,10 @@ class API_TouchController extends Controller
     {
         //validate
         $request->validate([
-            'Touch_id' => 'required'
+            'touch_id' => 'required'
         ]);
 
-        $id = $request->Touch_id;
+        $id = $request->touch_id;
 
         //check exist
         $Touch = $this->TouchRepository->getTouchById($id);

@@ -31,7 +31,9 @@ class API_PageController extends Controller
     public function store(Request $request)
     {
         $Page = new Page();
-        $Page->Page;
+        $Page->story_id = $request->story_id;
+        $Page->background = $request->background;
+        $Page->page_num = $request->page_num;
         $this->PageRepository->createPage($Page);
         return response($Page,200);
     }
@@ -59,10 +61,10 @@ class API_PageController extends Controller
     {
         //validate
         $request->validate([
-            'Page_id' => 'required'
+            'page_id' => 'required'
         ]);
 
-        $id = $request->Page_id;
+        $id = $request->page_id;
 
         //check exist
         $exist = $this->PageRepository->getPageById($id);
@@ -87,10 +89,10 @@ class API_PageController extends Controller
     {
         //validate
         $request->validate([
-            'Page_id' => 'required'
+            'page_id' => 'required'
         ]);
 
-        $id = $request->Page_id;
+        $id = $request->page_id;
 
         //check exist
         $Page = $this->PageRepository->getPageById($id);

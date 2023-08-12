@@ -30,8 +30,14 @@ class API_StoryController extends Controller
      */
     public function store(Request $request)
     {
+        //validate
         $Story = new Story();
-        $Story->Story;
+        $Story->author_id=$request->author_id;
+        $Story->type_id=$request->type_id;
+        $Story->name=$request->name;
+        $Story->thumbnail=$request->thumbnail;
+        $Story->coin=$request->coin;
+        $Story->isActive=$request->isActive;
         $this->StoryRepository->createStory($Story);
         return response($Story,200);
     }
@@ -59,10 +65,10 @@ class API_StoryController extends Controller
     {
         //validate
         $request->validate([
-            'Story_id' => 'required'
+            'story_id' => 'required'
         ]);
 
-        $id = $request->Story_id;
+        $id = $request->story_id;
 
         //check exist
         $exist = $this->StoryRepository->getStoryById($id);
@@ -87,10 +93,10 @@ class API_StoryController extends Controller
     {
         //validate
         $request->validate([
-            'Story_id' => 'required'
+            'story_id' => 'required'
         ]);
 
-        $id = $request->Story_id;
+        $id = $request->story_id;
 
         //check exist
         $Story = $this->StoryRepository->getStoryById($id);

@@ -31,7 +31,8 @@ class API_AudioController extends Controller
     public function store(Request $request)
     {
         $Audio = new Audio();
-        $Audio->Audio;
+        $Audio->audio = $request->audio;
+        $Audio->text_id = $request->text_id;
         $this->AudioRepository->createAudio($Audio);
         return response($Audio,200);
     }
@@ -59,10 +60,10 @@ class API_AudioController extends Controller
     {
         //validate
         $request->validate([
-            'Audio_id' => 'required'
+            'audio_id' => 'required'
         ]);
 
-        $id = $request->Audio_id;
+        $id = $request->audio_id;
 
         //check exist
         $exist = $this->AudioRepository->getAudioById($id);
@@ -87,10 +88,10 @@ class API_AudioController extends Controller
     {
         //validate
         $request->validate([
-            'Audio_id' => 'required'
+            'audio_id' => 'required'
         ]);
 
-        $id = $request->Audio_id;
+        $id = $request->audio_id;
 
         //check exist
         $Audio = $this->AudioRepository->getAudioById($id);

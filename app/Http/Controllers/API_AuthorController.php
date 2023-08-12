@@ -31,7 +31,9 @@ class API_AuthorController extends Controller
     public function store(Request $request)
     {
         $Author = new Author();
-        $Author->Author;
+        $Author->name = $request->name;
+        $Author->DOB = $request->DOB;
+        $Author->gender = $request->gender;
         $this->AuthorRepository->createAuthor($Author);
         return response($Author,200);
     }
@@ -59,10 +61,10 @@ class API_AuthorController extends Controller
     {
         //validate
         $request->validate([
-            'Author_id' => 'required'
+            'author_id' => 'required'
         ]);
 
-        $id = $request->Author_id;
+        $id = $request->author_id;
 
         //check exist
         $exist = $this->AuthorRepository->getAuthorById($id);
@@ -87,10 +89,10 @@ class API_AuthorController extends Controller
     {
         //validate
         $request->validate([
-            'Author_id' => 'required'
+            'author_id' => 'required'
         ]);
 
-        $id = $request->Author_id;
+        $id = $request->author_id;
 
         //check exist
         $Author = $this->AuthorRepository->getAuthorById($id);

@@ -31,7 +31,7 @@ class API_TypeController extends Controller
     public function store(Request $request)
     {
         $Type = new Type();
-        $Type->Type;
+        $Type->name = $request->name;
         $this->TypeRepository->createType($Type);
         return response($Type,200);
     }
@@ -59,10 +59,10 @@ class API_TypeController extends Controller
     {
         //validate
         $request->validate([
-            'Type_id' => 'required'
+            'type_id' => 'required'
         ]);
 
-        $id = $request->Type_id;
+        $id = $request->type_id;
 
         //check exist
         $exist = $this->TypeRepository->getTypeById($id);
@@ -87,10 +87,10 @@ class API_TypeController extends Controller
     {
         //validate
         $request->validate([
-            'Type_id' => 'required'
+            'type_id' => 'required'
         ]);
 
-        $id = $request->Type_id;
+        $id = $request->type_id;
 
         //check exist
         $Type = $this->TypeRepository->getTypeById($id);
