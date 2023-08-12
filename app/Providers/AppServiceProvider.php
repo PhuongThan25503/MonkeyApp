@@ -8,6 +8,8 @@ use App\Repositories\StoryRepository;
 use App\Repositories\StoryRepositoryInterface;
 use App\Repositories\TextConfigRepository;
 use App\Repositories\TextConfigRepositoryInterface;
+use App\Repositories\TextRepository;
+use App\Repositories\TextRepositoryInterface;
 use App\Repositories\TouchRepository;
 use App\Repositories\TouchRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(TextConfigRepositoryInterface::class, function($app){
             return new TextConfigRepository();
+        });
+        $this->app->bind(TextRepositoryInterface::class, function ($app){
+            return new TextRepository();
         });
     }
 
