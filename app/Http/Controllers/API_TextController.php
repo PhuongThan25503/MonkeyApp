@@ -99,6 +99,7 @@ class API_TextController extends Controller
             /*delete data in related tables*/
             $Text->TextConfig()->delete();// delete data in text config
             $Text->Touch_()->delete(); //delete data in touch
+            $Text->Audio()->delete(); //delete related audio
             /**/
 
             $this->textRepository->deleteTextById($id);
