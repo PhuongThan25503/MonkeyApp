@@ -59,17 +59,27 @@ class API_PageController extends Controller
         ]);
 
         $id= $request->page_id;
-        //make a page
-        $page = Page::make($request->all());
 
-        //update
-        $this->PageRepository->updatePage($id, $page);
+        //check exist
+        $exist = Page::find($id);
 
-        //return
-        return response()->json([
-            'page' => $this->PageRepository->getPageById($id),
-            'message' => 'update successfully',
-        ]);
+        if($exist){
+            //make a page
+            $page = Page::make($request->all());
+
+            //update
+            $this->PageRepository->updatePage($id, $page);
+
+            //return
+            return response()->json([
+                'page' => $this->PageRepository->getPageById($id),
+                'message' => 'update successfully',
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'page not found'
+            ],404);
+        }
     }
 
     /**

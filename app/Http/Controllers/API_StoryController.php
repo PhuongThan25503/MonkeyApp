@@ -63,17 +63,27 @@ class API_StoryController extends Controller
             'story_id' => 'required',
         ]);
 
+        $id = $request->story_id;
+
         // Find the story by id
-        $story= Story::make($request->all());
+        $exist = Story::find($id);
 
-        // Update the story with the request data
-        $this->StoryRepository->updateStory($request->story_id,$story);
+        if($exist){//if exist then update
+            $story= Story::make($request->all());
 
-        // Return a JSON response with the updated story
-        return response()->json([
-            'story'=>$story,
-            'message' => 'Data updated',
-        ], 200);
+            // Update the story with the request data
+            $this->StoryRepository->updateStory($id,$story);
+
+            // Return a JSON response with the updated story
+            return response()->json([
+                'story'=>$story,
+                'message' => 'Data updated',
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Story not found'
+            ], 404);
+        }
     }
 
     /**

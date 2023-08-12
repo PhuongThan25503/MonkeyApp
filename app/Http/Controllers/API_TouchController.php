@@ -63,17 +63,27 @@ class API_TouchController extends Controller
             'touch_id' => 'required',
         ]);
 
-        //make a touch
-        $touch = Touch::make($request->all());
+        //check exist
+        $exist = Touch::find($id);
 
-        //update
-        $this->TouchRepository->updateTouch($id, $touch);
+        if($exist){
+            //make a touch
+            $touch = Touch::make($request->all());
 
-        //return
-        return response()->json([
-            'new_data' => $this->TouchRepository->getTouchById($id),
-            'message' => 'Data updated',
-        ],200);
+            //update
+            $this->TouchRepository->updateTouch($id, $touch);
+
+            //return
+            return response()->json([
+                'new_data' => $this->TouchRepository->getTouchById($id),
+                'message' => 'Data updated',
+            ],200);
+        }
+        else{
+            return response()->json([
+                'message' => 'Touch not found'
+            ], 404);
+        }
     }
 
     /**
