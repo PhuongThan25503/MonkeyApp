@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use App\Models\Story;
 use App\Http\Controllers\Controller;
 use App\Repositories\StoryRepositoryInterface;
@@ -101,8 +102,19 @@ class API_StoryController extends Controller
         //check exist
         $Story = $this->StoryRepository->getStoryById($id);
 
+
         if($Story){
-            $this->StoryRepository->deleteStoryById($id);
+
+            /*delete the related tables' dara*/
+            $Story->Page()->each(function ($page){
+                $page->Touch_()->delete(); //delete touch
+                $page->TextConfig()->delete(); //delete config
+            });
+            $Story->Page()->delete(); //delete pages of that story
+            /**/
+
+            $this->StoryRepository->deleteStoryById($id); //delete the story
+
             return response()->json([
                 'message' => 'Story deleted'
             ], 200);

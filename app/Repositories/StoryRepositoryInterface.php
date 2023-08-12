@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Repositories;
+use App\Models\Story;
+
 Interface StoryRepositoryInterface{
     public function getAllStory();
     public function getStoryById($id);

@@ -98,6 +98,12 @@ class API_PageController extends Controller
         $Page = $this->PageRepository->getPageById($id);
 
         if($Page){
+
+            /*delete data in related tables*/
+            $Page->TextConfig()->delete();// delete data in text config
+            $Page->Touch()->delete(); //delete data in touch
+            /**/
+
             $this->PageRepository->deletePageById($id);
             return response()->json([
                 'message' => 'Page deleted'

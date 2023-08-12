@@ -93,9 +93,14 @@ class API_TextController extends Controller
         $id = $request->text_id;
 
         //check exist
-        $text = $this->textRepository->getTextById($id);
+        $Text = $this->textRepository->getTextById($id);
 
-        if($text){
+        if($Text){
+            /*delete data in related tables*/
+            $Text->TextConfig()->delete();// delete data in text config
+            $Text->Touch_()->delete(); //delete data in touch
+            /**/
+
             $this->textRepository->deleteTextById($id);
             return response()->json([
                 'message' => 'text deleted'
