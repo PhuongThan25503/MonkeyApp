@@ -42,7 +42,6 @@ class StoryRepository extends BaseRepository implements StoryRepositoryInterface
     }
 
     public function deleteStoryById($id){
-        $story = Story::find($id);
-        Story::destroy($id);
+        return Story::destroy($id);
     }
 }

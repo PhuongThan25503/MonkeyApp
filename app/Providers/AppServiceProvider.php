@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repositories\PageRepository;
+use App\Repositories\PageRepositoryInterface;
 use App\Repositories\StoryRepository;
 use App\Repositories\StoryRepositoryInterface;
+use App\Repositories\TouchRepository;
+use App\Repositories\TouchRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +19,12 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(StoryRepositoryInterface::class, function($app){
             return new StoryRepository();
+        });
+        $this->app->bind(TouchRepositoryInterface::class, function ($app){
+            return new TouchRepository();
+        });
+        $this->app->bind(PageRepositoryInterface::class, function ($app){
+            return new PageRepository();
         });
     }
 

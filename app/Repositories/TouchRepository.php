@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Touch;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
-use TouchRepositoryInterface;
 
 //use Your Model
 
@@ -24,27 +23,28 @@ class TouchRepository extends BaseRepository implements TouchRepositoryInterface
 
     public function getAllTouch()
     {
-        // TODO: Implement getAllTouch() method.
+        return Touch::all();
     }
 
     public function getTouchById($id)
     {
-        // TODO: Implement getTouchById() method.
+        return Touch::find($id);
     }
 
     public function createTouch($data)
     {
-        // TODO: Implement createTouch() method.
+        return Touch::create($data->toArray());
     }
 
     public function updateTouch($id, $data)
     {
-        // TODO: Implement updateTouch() method.
+        $touch = Touch::find($id);
+        return $touch->update($data->toArray());
     }
 
     public function deleteTouchById($id)
     {
-        // TODO: Implement deleteTouchById() method.
+        Return Touch::destroy($id);
     }
 
 

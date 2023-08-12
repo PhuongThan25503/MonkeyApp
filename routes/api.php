@@ -98,48 +98,48 @@ Route::delete('deletePage', [API_PageController::class, 'destroy']);
 
 /*Text*/
 //get all Text
-Route::get('getAllPage', [API_TextController::class, 'index']);
+Route::get('getAllText', [API_TextController::class, 'index']);
 //get Text by id
-Route::get('getPageById/{id}', [API_TextController::class, 'show']);
+Route::get('getTextById/{id}', [API_TextController::class, 'show']);
 //add new Text
-Route::post('addNewPage', [API_TextController::class, 'store']);
+Route::post('addNewText', [API_TextController::class, 'store']);
 //update a Text
-Route::patch('updatePage', [API_TextController::class, 'update']);
+Route::patch('updateText', [API_TextController::class, 'update']);
 //delete a Text
-Route::delete('deletePage', [API_TextController::class, 'destroy']);
+Route::delete('deleteText', [API_TextController::class, 'destroy']);
 
 /*Audio*/
 //get all Audio
-Route::get('getAllPage', [API_AudioController::class, 'index']);
+Route::get('getAllAudio', [API_AudioController::class, 'index']);
 //get Audio by id
-Route::get('getPageById/{id}', [API_AudioController::class, 'show']);
+Route::get('getAudioById/{id}', [API_AudioController::class, 'show']);
 //add new Audio
-Route::post('addNewPage', [API_AudioController::class, 'store']);
+Route::post('addNewAudio', [API_AudioController::class, 'store']);
 //update a Audio
-Route::patch('updatePage', [API_AudioController::class, 'update']);
+Route::patch('updateAudio', [API_AudioController::class, 'update']);
 //delete a Audio
-Route::delete('deletePage', [API_AudioController::class, 'destroy']);
+Route::delete('deleteAudio', [API_AudioController::class, 'destroy']);
 
 /*Touch*/
 //get all Touches
-Route::get('getAllPage', [API_TouchController::class, 'index']);
+Route::get('getAllTouch', [API_TouchController::class, 'index']);
 //get Touch by id
-Route::get('getPageById/{id}', [API_TouchController::class, 'show']);
+Route::get('getTouchById/{id}', [API_TouchController::class, 'show']);
 //add new Touch
-Route::post('addNewPage', [API_TouchController::class, 'store']);
+Route::post('addNewTouch', [API_TouchController::class, 'store']);
 //update a Touch
-Route::patch('updatePage', [API_TouchController::class, 'update']);
+Route::patch('updateTouch', [API_TouchController::class, 'update']);
 //delete a Touch
-Route::delete('deletePage', [API_TouchController::class, 'destroy']);
+Route::delete('deleteTouch', [API_TouchController::class, 'destroy']);
 
 /*TextConfig*/
 //get all TextConfig
-Route::get('getAllPage', [API_TextConfigController::class, 'index']);
+Route::get('getAllTextConfig', [API_TextConfigController::class, 'index']);
 //get TextConfig by id
-Route::get('getPageById/{id}', [API_TextConfigController::class, 'show']);
+Route::get('getTextConfigById/{id}', [API_TextConfigController::class, 'show']);
 //add new TextConfig
-Route::post('addNewPage', [API_TextConfigController::class, 'store']);
+Route::post('addNewTextConfig', [API_TextConfigController::class, 'store']);
 //update a TextConfig
-Route::patch('updatePage', [API_TextConfigController::class, 'update']);
+Route::patch('updateTextConfig', [API_TextConfigController::class, 'update']);
 //delete a TextConfig
-Route::delete('deletePage', [API_TextConfigController::class, 'destroy']);
+Route::delete('deleteTextConfig', [API_TextConfigController::class, 'destroy']);

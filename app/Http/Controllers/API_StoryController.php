@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Story;
 use App\Http\Controllers\Controller;
+use App\Repositories\PageRepository;
 use App\Repositories\StoryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -85,12 +86,22 @@ class API_StoryController extends Controller
            'story_id' => 'required'
         ]);
 
-        //find the story by id
-        $this->StoryRepository->deleteStoryById($request->story_id);
+        $id = $request->story_id;
 
-        //return json response
-        return response()->json([
-           'message' => 'Data deleted',
-        ], 200);
+        //find the story by id
+        $story = $this->StoryRepository->getStoryById($id);
+
+        //delete story
+        if ($story){
+            $this->StoryRepository->deleteStoryById($id);
+            return response()->json([
+                'message' => 'Story deleted successfully',
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'message' => 'Story not found'
+            ], 404);
+        }
     }
 }

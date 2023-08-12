@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Repositories;
 interface TouchRepositoryInterface{
     public function getAllTouch();
     public function getTouchById($id);
