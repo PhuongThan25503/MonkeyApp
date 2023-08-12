@@ -99,7 +99,7 @@ class API_AudioController extends Controller
         if($Audio){
             $this->AudioRepository->deleteAudioById($id);
             return response()->json([
-                'Audio deleted'
+                'message' => 'Audio deleted'
             ], 200);
         }else{
             return response()->json([

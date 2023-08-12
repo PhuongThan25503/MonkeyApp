@@ -100,7 +100,7 @@ class API_TouchController extends Controller
         if($Touch){
             $this->TouchRepository->deleteTouchById($id);
             return response()->json([
-                'Touch deleted'
+                'message' => 'Touch deleted'
             ], 200);
         }else{
             return response()->json([

@@ -100,7 +100,7 @@ class API_AuthorController extends Controller
         if($Author){
             $this->AuthorRepository->deleteAuthorById($id);
             return response()->json([
-                'Author deleted'
+                'message' => 'Author deleted'
             ], 200);
         }else{
             return response()->json([

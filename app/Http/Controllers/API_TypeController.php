@@ -98,7 +98,7 @@ class API_TypeController extends Controller
         if($Type){
             $this->TypeRepository->deleteTypeById($id);
             return response()->json([
-                'Type deleted'
+                'message' => 'Type deleted'
             ], 200);
         }else{
             return response()->json([

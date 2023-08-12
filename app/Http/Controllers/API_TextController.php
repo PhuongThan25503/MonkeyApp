@@ -98,7 +98,7 @@ class API_TextController extends Controller
         if($text){
             $this->textRepository->deleteTextById($id);
             return response()->json([
-                'text deleted'
+                'message' => 'text deleted'
             ], 200);
         }else{
             return response()->json([

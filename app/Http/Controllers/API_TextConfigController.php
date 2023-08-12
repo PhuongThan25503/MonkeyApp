@@ -100,7 +100,7 @@ class API_TextConfigController extends Controller
         if($TextConfig){
             $this->TextConfigRepository->deleteTextConfigById($id);
             return response()->json([
-                'TextConfig deleted'
+                'message' => 'TextConfig deleted'
             ], 200);
         }else{
             return response()->json([

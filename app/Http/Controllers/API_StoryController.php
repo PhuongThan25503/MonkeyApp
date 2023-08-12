@@ -104,7 +104,7 @@ class API_StoryController extends Controller
         if($Story){
             $this->StoryRepository->deleteStoryById($id);
             return response()->json([
-                'Story deleted'
+                'message' => 'Story deleted'
             ], 200);
         }else{
             return response()->json([

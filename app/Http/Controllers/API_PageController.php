@@ -100,7 +100,7 @@ class API_PageController extends Controller
         if($Page){
             $this->PageRepository->deletePageById($id);
             return response()->json([
-                'Page deleted'
+                'message' => 'Page deleted'
             ], 200);
         }else{
             return response()->json([
