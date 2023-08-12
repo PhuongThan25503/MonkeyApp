@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\AudioRepository;
+use App\Repositories\AudioRepositoryInterface;
 use App\Repositories\PageRepository;
 use App\Repositories\PageRepositoryInterface;
 use App\Repositories\StoryRepository;
@@ -35,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(TextRepositoryInterface::class, function ($app){
             return new TextRepository();
+        });
+        $this->app->bind(AudioRepositoryInterface::class,function ($app){
+            return new AudioRepository();
         });
     }
 
