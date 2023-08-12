@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Type;
 use App\Repositories\AudioRepository;
 use App\Repositories\AudioRepositoryInterface;
 use App\Repositories\AuthorRepository;
@@ -16,6 +17,8 @@ use App\Repositories\TextRepository;
 use App\Repositories\TextRepositoryInterface;
 use App\Repositories\TouchRepository;
 use App\Repositories\TouchRepositoryInterface;
+use App\Repositories\TypeRepository;
+use App\Repositories\TypeRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,6 +48,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(AuthorRepositoryInterface::class, function ($app){
             return new AuthorRepository();
+        });
+        $this->app->bind(TypeRepositoryInterface::class,function ($app){
+            return new TypeRepository();
         });
     }
 
