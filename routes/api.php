@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\API_AudioController;
-use App\Http\Controllers\API_AuthorController;
+use App\Http\Controllers\API_RoleController;
+use App\Http\Controllers\API_UserController;
 use App\Http\Controllers\API_PageController;
 use App\Http\Controllers\API_StoryController;
 use App\Http\Controllers\API_TextConfigController;
@@ -146,17 +147,17 @@ Route::patch('updateTextConfig', [API_TextConfigController::class, 'update']);
 //delete a TextConfig
 Route::delete('deleteTextConfig', [API_TextConfigController::class, 'destroy']);
 
-/*Author*/
-//get all Author
-Route::get('getAllAuthor', [API_AuthorController::class, 'index']);
-//get Author by id
-Route::get('getAuthorById/{id}', [API_AuthorController::class, 'show']);
-//add new Author
-Route::post('addNewAuthor', [API_AuthorController::class, 'store']);
-//update an Author
-Route::patch('updateAuthor', [API_AuthorController::class, 'update']);
-//delete an Author
-Route::delete('deleteAuthor', [API_AuthorController::class, 'destroy']);
+/*User*/
+//get all User
+Route::get('getAllUser', [API_UserController::class, 'index']);
+//get User by id
+Route::get('getUserById/{id}', [API_UserController::class, 'show']);
+//add new User
+Route::post('addNewUser', [API_UserController::class, 'store']);
+//update an User
+Route::patch('updateUser', [API_UserController::class, 'update']);
+//delete an User
+Route::delete('deleteUser', [API_UserController::class, 'destroy']);
 
 /*Type*/
 //get all Type
@@ -169,3 +170,15 @@ Route::post('addNewType', [API_TypeController::class, 'store']);
 Route::patch('updateType', [API_TypeController::class, 'update']);
 //delete an Type
 Route::delete('deleteType', [API_TypeController::class, 'destroy']);
+
+/*Role*/
+//get all Role
+Route::get('getAllRole', [API_RoleController::class, 'index']);
+//get Role by id
+Route::get('getRoleById/{id}', [API_RoleController::class, 'show']);
+//add new Role
+Route::post('addNewRole', [API_RoleController::class, 'store']);
+//update an Role
+Route::patch('updateRole', [API_RoleController::class, 'update']);
+//delete an Role
+Route::delete('deleteRole', [API_RoleController::class, 'destroy']);
