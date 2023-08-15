@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class API_UserController extends Controller
 {
@@ -110,6 +112,16 @@ class API_UserController extends Controller
             return response()->json([
                 'message' => 'User not found'
             ], 404);
+        }
+    }
+
+    public function authenticate(Request $request){
+        //retrieve only username, password from request
+        $credentials = $request->only('username', 'password');
+
+        //Laravel's authentication check the username and password provided above if match an User will return true
+        if (Auth::attempt($credentials)){
+            $token = Str::random(60);
         }
     }
 }

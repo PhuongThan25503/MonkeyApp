@@ -73,31 +73,49 @@ Route::get('getStoryByIdTest/{id}', function ($id){
     return $story->Page()->get();
 });
 
+Route::get('test__IIE3107',function (){
+   return (\App\Models\User::find(1)->Role()->value('name') == 'admin');
+});
+
+/*
+ *
+ *   *************************************
+ * ***** (   o    ) ******  (   o   )  ******
+ *   *************************************
+ * */
+
 //Below are APIs for main project
 
+/*Login*/
+Route::get('authenticate', [API_UserController::class, 'authenticate'])->middleware('auth:api');
+
 /*Story*/
+Route::group(['middleware' => 'author'],function (){
+    //add new story
+    Route::post('addNewStory', [API_StoryController::class, 'store']);
+    //update a story
+    Route::patch('updateStory', [API_StoryController::class, 'update']);
+    //delete a story
+    Route::delete('deleteStory', [API_StoryController::class, 'destroy']);
+});
 //get all story
 Route::get('getAllStory', [API_StoryController::class, 'index']);
 //get story by id
 Route::get('getStoryById/{id}', [API_StoryController::class, 'show']);
-//add new story
-Route::post('addNewStory', [API_StoryController::class, 'store']);
-//update a story
-Route::patch('updateStory', [API_StoryController::class, 'update']);
-//delete a story
-Route::delete('deleteStory', [API_StoryController::class, 'destroy']);
 
 /*Page*/
+Route::group(['middleware' => 'author'],function (){
+    //add new Page
+    Route::post('addNewPage', [API_PageController::class, 'store']);
+    //update a Page
+    Route::patch('updatePage', [API_PageController::class, 'update']);
+    //delete a Page
+    Route::delete('deletePage', [API_PageController::class, 'destroy']);
+});
 //get all Page
 Route::get('getAllPage', [API_PageController::class, 'index']);
 //get Page by id
 Route::get('getPageById/{id}', [API_PageController::class, 'show']);
-//add new Page
-Route::post('addNewPage', [API_PageController::class, 'store']);
-//update a Page
-Route::patch('updatePage', [API_PageController::class, 'update']);
-//delete a Page
-Route::delete('deletePage', [API_PageController::class, 'destroy']);
 
 /*Text*/
 //get all Text
