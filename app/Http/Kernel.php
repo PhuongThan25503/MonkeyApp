@@ -68,6 +68,5 @@ class Kernel extends HttpKernel
     ];
     protected $routeMiddleware = [
         'author' => AuthorMiddleware::class,
-
     ];
 }

@@ -117,11 +117,19 @@ class API_UserController extends Controller
 
     public function authenticate(Request $request){
         //retrieve only username, password from request
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->validate([
+           'username'=>'required',
+           'password'=>'required'
+        ]);
 
-        //Laravel's authentication check the username and password provided above if match an User will return true
-        if (Auth::attempt($credentials)){
+        //password will be automatically enscrypted by enscrypt techique write in config/hash
+        if(Auth::attempt($credentials)){
             $token = Str::random(60);
+            //sha256 is quicklier hashing method compared to bcrypt as api_token is used in high frequency
+            Auth::user()->api_token = hash('sha256', $token);
+            Auth::user()->save();
+            return response()->json(['token' => $token]);
         }
+        return response()->json(['error' => 'Invalid credentials'], 401);
     }
 }

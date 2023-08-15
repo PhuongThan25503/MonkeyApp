@@ -87,10 +87,16 @@ Route::get('test__IIE3107',function (){
 //Below are APIs for main project
 
 /*Login*/
-Route::get('authenticate', [API_UserController::class, 'authenticate'])->middleware('auth:api');
+Route::post('authenticate', [API_UserController::class, 'authenticate']);
 
 /*Story*/
 Route::group(['middleware' => 'author'],function (){
+    /*
+    test
+    */
+    Route::get('testAutho', function (){return response()->json('Passed');});
+    //
+
     //add new story
     Route::post('addNewStory', [API_StoryController::class, 'store']);
     //update a story

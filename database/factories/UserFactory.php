@@ -20,7 +20,7 @@ class UserFactory extends Factory
         return [
             'role_id' =>fake()->numberBetween(1,3),
             'username' => fake()->unique()->userName,
-            'password' => fake()->password,
+            'password' => '$2a$10$N3o4n6jxpyBo57JGeGlXO.daYvoteHd//60hiWW/gOsALfL3HoHe2', //password is 'PhuongTQ@#$123'
             'fullname' => fake()->name,
             'address' => fake()->address,
             'phone' => fake()->phoneNumber,
