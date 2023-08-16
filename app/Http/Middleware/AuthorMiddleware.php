@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use Closure;
 use Illuminate\Http\Request;
@@ -16,9 +17,11 @@ class AuthorMiddleware
      * @param Closure(Request): (Response) $next
      */
 
-    protected $UserRepository;
-    protected function __construct(UserRepositoryInterface $ur){
-        return $this->UserRepository = $ur;
+    public $UserRepository;
+
+    public function __construct(UserRepositoryInterface $UserRepository)
+    {
+        return $this->UserRepository = $UserRepository;
     }
     public function handle(Request $request, Closure $next): Response
     {

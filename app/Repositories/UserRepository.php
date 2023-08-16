@@ -48,6 +48,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function isApiTokenExist($token)
     {
-        return User::where('api_token', $token)->exist();
+        return User::where('api_token', $token)->exists();
     }
 }

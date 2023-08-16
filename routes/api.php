@@ -89,14 +89,11 @@ Route::get('test__IIE3107',function (){
 /*Login*/
 Route::post('authenticate', [API_UserController::class, 'authenticate']);
 
+/*Logout*/
+Route::post('logout', [API_UserController::class, 'logout']);
+
 /*Story*/
 Route::group(['middleware' => 'author'],function (){
-    /*
-    test
-    */
-    Route::get('testAutho', function (){return response()->json('Passed');});
-    //
-
     //add new story
     Route::post('addNewStory', [API_StoryController::class, 'store']);
     //update a story
