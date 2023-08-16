@@ -132,4 +132,21 @@ class API_UserController extends Controller
         }
         return response()->json(['error' => 'Invalid credentials'], 401);
     }
+
+    public function logout(Request $request){
+        //get the api token
+        $apiToken = $request->bearerToken();
+
+        //get the user by the token
+        $user = User::where('api_token', $apiToken)->first();
+
+        //delete the API token
+        if($user){
+            $user->api_token = null;
+            $user->save();
+            return response()->json(['message'=> 'logged out successfully']);
+        }
+
+        return response()->json(['message' => 'Unauthenticated'], 401);
+    }
 }
