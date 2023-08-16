@@ -128,7 +128,7 @@ class API_UserController extends Controller
             //sha256 is quicklier hashing method compared to bcrypt as api_token is used in high frequency
             Auth::user()->api_token = hash('sha256', $token);
             Auth::user()->save();
-            return response()->json(['token' => $token]);
+            return response()->json(['token' => Auth::user()->api_token]);
         }
         return response()->json(['error' => 'Invalid credentials'], 401);
     }

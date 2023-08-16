@@ -8,4 +8,6 @@ interface UserRepositoryInterface{
     public function createUser($data);
     public function updateUser($id, $data);
     public function deleteUserById($id);
+
+    public function isApiTokenExist($token);
 }
