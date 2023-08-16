@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Story extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
+
+    protected static $logAttributes = ['name', 'text'];
+
     protected $table = 'story';
     protected $primaryKey ='story_id';
     protected $fillable =[
@@ -22,7 +27,7 @@ class Story extends Model
     ];
 
     public function Author(): BelongsTo{ //one story belongs to one author
-        return $this->belongsTo(Author::class, 'author_id'); //for default, it's author_id , but I still write for clearance
+        return $this->belongsTo(User::class, 'author_id'); //for default, it's author_id , but I still write for clearance
     }
 
     public function Type(): BelongsTo{
@@ -31,5 +36,13 @@ class Story extends Model
 
     public function Page(): HasMany{ // one story has many pages
         return $this->hasMany(Page::class,'story_id');//for default, it's author_id , but I still write for clearance
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'text'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

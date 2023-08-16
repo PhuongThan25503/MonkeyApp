@@ -115,6 +115,7 @@ class API_UserController extends Controller
         }
     }
 
+    //log in
     public function authenticate(Request $request){
         //retrieve only username, password from request
         $credentials = $request->validate([
