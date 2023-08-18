@@ -13,7 +13,7 @@ class Story extends Model
 {
     use HasFactory, LogsActivity;
 
-    protected static $logAttributes = ['name', 'text'];
+    //protected static $logAttributes = ['name', 'text'];
 
     protected $table = 'story';
     protected $primaryKey ='story_id';
