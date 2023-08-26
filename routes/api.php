@@ -187,12 +187,10 @@ Route::group(['middleware'=>'admin'], function (){
 });
 //add new User
 Route::post('addNewUser', [API_UserController::class, 'store']);
-Route::group(['middleware' => 'user'], function (){
-    //update an User
-    Route::patch('updateUser', [API_UserController::class, 'update']);
-    //get personal info
-    Route::post('getPersonalInfo', [API_UserController::class, 'getPersonalInfo']);
-});
+//update an User
+Route::patch('updateUser', [API_UserController::class, 'update']);
+//get personal info
+Route::post('getPersonalInfo', [API_UserController::class, 'getPersonalInfo']);
 
 
 /*Type*/
