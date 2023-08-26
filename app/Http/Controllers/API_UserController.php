@@ -23,7 +23,7 @@ class API_UserController extends Controller
 
     public function index()
     {
-        $User= $this->UserRepository->getAllUser();
+        $User = $this->UserRepository->getAllUser();
         return response()->json($User, 200);
     }
 
@@ -41,23 +41,50 @@ class API_UserController extends Controller
         $User->phone = $request->phone;
         $User->email = $request->email;
         $this->UserRepository->createUser($User);
-        return response($User,200);
+        return response($User, 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $User = $this->UserRepository->getUserById($id);
-        if($User){//exist
-            return response()->json($User, 200);
-        }
-        else{
+    public function getUserById($id){
+        $user = $this->UserRepository->getUserById($id);
+        if($user){
+            return response()->json($user, 200);
+        } else {
             return response()->json([
                 'message' => 'not found User'
             ], 404);
         }
+    }
+
+    public function getUserInfo(Request $request)
+    {
+        //get data from request
+        $api_token = $request->api_token;
+        $id = $request->user_id;
+
+        //get user by token
+        $user = $this->UserRepository->getUserByToken($api_token);
+
+        //if user exists
+        if ($user & $user->id == $id) {
+            return response()->json($user, 200);
+        } else {
+            return response()->json([
+                'message' => 'not found User'
+            ], 404);
+        }
+
+//        $User = $this->UserRepository->getUserById($id);
+//        if($User){//exist
+//            return response()->json($User, 200);
+//        }
+//        else{
+//            return response()->json([
+//                'message' => 'not found User'
+//            ], 404);
+//        }
     }
 
     /**
@@ -75,13 +102,13 @@ class API_UserController extends Controller
         //check exist
         $exist = $this->UserRepository->getUserById($id);
 
-        if($exist){
+        if ($exist) {
             $User = User::make($request->all());
             $this->UserRepository->updateUser($id, $User);
             return response()->json([
-                'User'=>$this->UserRepository->getUserById($id)
+                'User' => $this->UserRepository->getUserById($id)
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'User not found'
             ], 404);
@@ -103,12 +130,12 @@ class API_UserController extends Controller
         //check exist
         $User = $this->UserRepository->getUserById($id);
 
-        if($User){
+        if ($User) {
             $this->UserRepository->deleteUserById($id);
             return response()->json([
                 'message' => 'User deleted'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'User not found'
             ], 404);
@@ -116,25 +143,31 @@ class API_UserController extends Controller
     }
 
     //log in
-    public function authenticate(Request $request){
+    public function authenticate(Request $request)
+    {
         //retrieve only username, password from request
         $credentials = $request->validate([
-           'username'=>'required',
-           'password'=>'required'
+            'username' => 'required',
+            'password' => 'required'
         ]);
 
         //password will be automatically enscrypted by enscrypt techique write in config/hash
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $token = Str::random(60);
             //sha256 is quicklier hashing method compared to bcrypt as api_token is used in high frequency
             Auth::user()->api_token = hash('sha256', $token);
+            Auth::user()->token_expired_at = date('Y-m-d H:i:s', time() + 3600);
             Auth::user()->save();
-            return response()->json(['token' => Auth::user()->api_token]);
+            return response()->json([
+                'token' => Auth::user()->api_token,
+                'user_id' => Auth::user()->getAuthIdentifier(), //user id
+            ]);
         }
         return response()->json(['error' => 'Invalid credentials'], 401);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         //get the api token
         $apiToken = $request->bearerToken();
 
@@ -142,10 +175,10 @@ class API_UserController extends Controller
         $user = User::where('api_token', $apiToken)->first();
 
         //delete the API token
-        if($user){
+        if ($user) {
             $user->api_token = null;
             $user->save();
-            return response()->json(['message'=> 'logged out successfully']);
+            return response()->json(['message' => 'logged out successfully']);
         }
 
         return response()->json(['message' => 'Unauthenticated'], 401);

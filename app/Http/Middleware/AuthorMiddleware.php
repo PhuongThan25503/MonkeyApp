@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use Closure;
@@ -27,6 +28,7 @@ class AuthorMiddleware
     {
         $apiToken = $request->bearerToken();
 
+
         //check if the API token is valid
         if($apiToken && $this->isValidAPIToken($apiToken)){
             return $next($request);
@@ -37,6 +39,12 @@ class AuthorMiddleware
     }
 
     protected function isValidAPIToken($token){
-        return $this->UserRepository->isApiTokenExist($token);
+        $user = $this->UserRepository->isApiTokenExist($token);
+        if($user){
+            $author = new Role;
+            $author->role_id = 2;
+            return $this->UserRepository->isRoleMatch($user, $author);
+        }
+        return false;
     }
 }

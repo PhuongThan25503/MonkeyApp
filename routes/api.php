@@ -187,6 +187,7 @@ Route::post('addNewUser', [API_UserController::class, 'store']);
 Route::patch('updateUser', [API_UserController::class, 'update']);
 //delete an User
 Route::delete('deleteUser', [API_UserController::class, 'destroy']);
+//get
 
 /*Type*/
 //get all Type
