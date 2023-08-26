@@ -177,17 +177,23 @@ Route::get('getAllTextConfig', [API_TextConfigController::class, 'index']);
 Route::get('getTextConfigById/{id}', [API_TextConfigController::class, 'show']);
 
 /*User*/
-//get all User
-Route::get('getAllUser', [API_UserController::class, 'index']);
-//get User by id
-Route::get('getUserById/{id}', [API_UserController::class, 'show']);
+Route::group(['middleware'=>'admin'], function (){
+    //get all User
+    Route::get('getAllUser', [API_UserController::class, 'index']);
+    //get User by id
+    Route::get('getUserById/{id}', [API_UserController::class, 'show']);
+    //delete an User (shouldn't)
+    //Route::delete('deleteUser', [API_UserController::class, 'destroy']);
+});
 //add new User
 Route::post('addNewUser', [API_UserController::class, 'store']);
-//update an User
-Route::patch('updateUser', [API_UserController::class, 'update']);
-//delete an User
-Route::delete('deleteUser', [API_UserController::class, 'destroy']);
-//get
+Route::group(['middleware' => 'user'], function (){
+    //update an User
+    Route::patch('updateUser', [API_UserController::class, 'update']);
+    //get personal info
+    Route::post('getPersonalInfo', [API_UserController::class, 'getPersonalInfo']);
+});
+
 
 /*Type*/
 //get all Type

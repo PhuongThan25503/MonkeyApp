@@ -58,17 +58,16 @@ class API_UserController extends Controller
         }
     }
 
-    public function getUserInfo(Request $request)
+    public function getPersonalInfo(Request $request)
     {
         //get data from request
-        $api_token = $request->api_token;
-        $id = $request->user_id;
+        $api_token = $request->bearerToken();
 
         //get user by token
         $user = $this->UserRepository->getUserByToken($api_token);
 
         //if user exists
-        if ($user & $user->id == $id) {
+        if ($user) {
             return response()->json($user, 200);
         } else {
             return response()->json([
