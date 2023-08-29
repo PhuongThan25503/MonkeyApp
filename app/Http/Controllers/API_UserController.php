@@ -47,7 +47,7 @@ class API_UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function getUserById($id){
+    public function show($id){
         $user = $this->UserRepository->getUserById($id);
         if($user){
             return response()->json($user, 200);
