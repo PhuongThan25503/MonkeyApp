@@ -25,7 +25,7 @@ class UserMiddleware
     {
         $token = $request->bearerToken();
 
-        if ($this->UserRepository->isApiTokenExist($token)) {
+        if (strlen($token)>0 && $this->UserRepository->isApiTokenExist($token)) {
             return $next($request);
         } //if API token is not valid
         else {

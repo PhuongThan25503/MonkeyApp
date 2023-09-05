@@ -22,7 +22,10 @@ class AudioRepository extends BaseRepository implements AudioRepositoryInterface
 
     public function getAllAudio()
     {
-        return Audio::all();
+        $audio = Audio::join('text', 'audio.text_id', '=', 'text.text_id')
+            ->select('audio.audio_id', 'audio.audio', 'audio.created_at', 'audio.updated_at','text.text_id', 'text.text')
+            ->get();
+        return $audio;
     }
 
     public function getAudioById($id)

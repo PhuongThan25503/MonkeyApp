@@ -78,5 +78,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user = User::where('api_token', $token)->first();
         return $user;
     }
-
 }

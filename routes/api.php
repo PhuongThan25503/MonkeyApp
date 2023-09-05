@@ -89,6 +89,12 @@ Route::get('test__IIE3107',function (){
 /*Login*/
 Route::post('authenticate', [API_UserController::class, 'authenticate']);
 
+/*refresh token*/
+Route::middleware('user')->post('refresh-token', [API_UserController::class, 'refreshToken']);
+
+/*check login status*/
+Route::middleware('user')->post('isLoggedIn', [API_UserController::class, 'checkLoginStatus']);
+
 /*Story*/
 Route::group(['middleware' => 'author'],function (){
     //add new story

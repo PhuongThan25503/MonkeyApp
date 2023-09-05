@@ -181,4 +181,19 @@ class API_UserController extends Controller
         }
         return response()->json(['error' => 'user not found'], 401);
     }
+
+    public function refreshToken(Request $request){
+        $token = $request->bearerToken();
+        $user = User::where('api_token', $token)->first();
+        $api_token = Str::random(60);
+        //sha256 is quicklier hashing method compared to bcrypt as api_token is used in high frequency
+        $user->api_token = hash('sha256', $token);
+        $user->token_expired_at = date('Y-m-d H:i:s', time() + 3600);
+        $user->save();
+        return response()->json(['token' => $user->api_token], 200);
+    }
+
+    public function checkLoginStatus(Request $request){
+        return response()->json(true, 200);
+    }
 }
