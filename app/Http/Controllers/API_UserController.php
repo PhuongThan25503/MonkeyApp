@@ -171,7 +171,7 @@ class API_UserController extends Controller
         $apiToken = $request->bearerToken();
 
         //get the user by the token
-        $user = User::where('api_token', $apiToken)->first();
+        $user = $this->UserRepository->getUserByToken(($apiToken));
 
         //delete the API token
         if ($user) {
@@ -179,7 +179,6 @@ class API_UserController extends Controller
             $user->save();
             return response()->json(['message' => 'logged out successfully']);
         }
-
-        return response()->json(['message' => 'Unauthenticated'], 401);
+        return response()->json(['error' => 'user not found'], 401);
     }
 }

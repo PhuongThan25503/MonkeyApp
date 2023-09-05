@@ -89,9 +89,6 @@ Route::get('test__IIE3107',function (){
 /*Login*/
 Route::post('authenticate', [API_UserController::class, 'authenticate']);
 
-/*Logout*/
-Route::post('logout', [API_UserController::class, 'logout']);
-
 /*Story*/
 Route::group(['middleware' => 'author'],function (){
     //add new story
@@ -192,6 +189,8 @@ Route::group(['middleware'=>'user'], function (){
     Route::patch('updateUser', [API_UserController::class, 'update']);
     //get personal info
     Route::post('getPersonalInfo', [API_UserController::class, 'getPersonalInfo']);
+    /*Logout*/
+    Route::post('logout', [API_UserController::class, 'logout']);
 });
 
 
