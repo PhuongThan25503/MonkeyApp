@@ -30,4 +30,8 @@ class Page extends Model
     public function Touch_():HasMany{
         return $this->hasMany(Touch::class, 'page_id');
     }
+
+    public function Text():BelongsTo{
+        return $this->belongsTo(Text::class, 'text_id');
+    }
 }

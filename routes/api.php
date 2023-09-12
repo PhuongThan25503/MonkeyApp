@@ -122,6 +122,8 @@ Route::group(['middleware' => 'author'],function (){
 Route::get('getAllPage', [API_PageController::class, 'index']);
 //get Page by id
 Route::get('getPageById/{id}', [API_PageController::class, 'show']);
+//get all pages by story id
+Route::get('getPagesByStoryId/{id}', [API_PageController::class, 'getPagesByStoryId']);
 
 /*Text*/
 Route::group(['middleware' => 'author'], function(){

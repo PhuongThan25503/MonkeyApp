@@ -46,5 +46,8 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
         return Page::destroy($id);
     }
 
-
+    public function getPagesByStoryId($id){
+        $page = Page::where('story_id', $id)->orderBy('page_num')->get();
+        return $page;
+    }
 }

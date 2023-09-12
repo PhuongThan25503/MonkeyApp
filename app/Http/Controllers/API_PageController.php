@@ -21,7 +21,7 @@ class API_PageController extends Controller
 
     public function index()
     {
-        $Page= $this->PageRepository->getAllPage();
+        $Page = $this->PageRepository->getAllPage();
         return response()->json($Page, 200);
     }
 
@@ -35,7 +35,7 @@ class API_PageController extends Controller
         $Page->background = $request->background;
         $Page->page_num = $request->page_num;
         $this->PageRepository->createPage($Page);
-        return response($Page,200);
+        return response($Page, 200);
     }
 
     /**
@@ -44,10 +44,9 @@ class API_PageController extends Controller
     public function show($id)
     {
         $Page = $this->PageRepository->getPageById($id);
-        if($Page){//exist
+        if ($Page) { //exist
             return response()->json($Page, 200);
-        }
-        else{
+        } else {
             return response()->json([
                 'message' => 'not found Page'
             ], 404);
@@ -69,13 +68,13 @@ class API_PageController extends Controller
         //check exist
         $exist = $this->PageRepository->getPageById($id);
 
-        if($exist){
+        if ($exist) {
             $Page = Page::make($request->all());
             $this->PageRepository->updatePage($id, $Page);
             return response()->json([
-                'Page'=>$this->PageRepository->getPageById($id)
+                'Page' => $this->PageRepository->getPageById($id)
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Page not found'
             ], 404);
@@ -97,10 +96,10 @@ class API_PageController extends Controller
         //check exist
         $Page = $this->PageRepository->getPageById($id);
 
-        if($Page){
+        if ($Page) {
 
             /*delete data in related tables*/
-            $Page->TextConfig()->delete();// delete data in text config
+            $Page->TextConfig()->delete(); // delete data in text config
             $Page->Touch()->delete(); //delete data in touch
             /**/
 
@@ -108,7 +107,24 @@ class API_PageController extends Controller
             return response()->json([
                 'message' => 'Page deleted'
             ], 200);
-        }else{
+        } else {
+            return response()->json([
+                'message' => 'Page not found'
+            ], 404);
+        }
+    }
+
+    /**
+     * get all pages by story id
+     */
+    public function getPagesbyStoryId($id)
+    {
+        $page = $this->PageRepository->getPagesByStoryId($id);
+        if ($page) {
+            return response()->json(
+                $page
+            , 200);
+        } else {
             return response()->json([
                 'message' => 'Page not found'
             ], 404);

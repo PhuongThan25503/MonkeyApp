@@ -26,4 +26,8 @@ class Text extends Model
     public function Audio() :HasMany{
         return $this->hasMany(Audio::class, 'text_id');
     }
+
+    public function Page() : HasMany{
+        return $this->hasMany(Page::class, 'text_id');
+    }
 }

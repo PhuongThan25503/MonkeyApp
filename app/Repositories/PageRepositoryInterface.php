@@ -7,4 +7,5 @@ interface PageRepositoryInterface{
     public function createPage($data);
     public function updatePage($id, $data);
     public function deletePageById($id);
+    public function getPagesByStoryId($id);
 }
