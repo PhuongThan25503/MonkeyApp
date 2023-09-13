@@ -27,7 +27,16 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
 
     public function getPageById($id)
     {
-        return Page::find($id);
+        //get all info of pages
+        $page = Page::with(['text', 'Touch_.Text.Audio'])->find($id, ['page_id', 'background', 'page_num', 'text_id']);
+
+        //change string to json array
+        $page->touch_->each(function ($t) {
+            $data_raw = json_decode($t->data);
+            $t->data = $data_raw;
+        });
+
+        return $page;
     }
 
     public function createPage($data)

@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('page', function (Blueprint $table) {
-            $table->foreign(['story_id'])->references(['story_id'])->on('story');
+        Schema::create('touch', function (Blueprint $table) {
+            $table->bigIncrements('touch_id');
+            $table->unsignedBigInteger('page_id')->index('touch_page_id_foreign');
+            $table->unsignedBigInteger('text_id')->index('touch_text_id_foreign');
+            $table->json('data');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('page', function (Blueprint $table) {
-            $table->dropForeign('page_story_id_foreign');
-        });
+        Schema::dropIfExists('touch');
     }
 };

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Page extends Model
 {
@@ -14,6 +15,7 @@ class Page extends Model
     protected $primaryKey='page_id';
     protected $fillable=[
         'story_id',
+        'text_id',
         'background',
         'page_num',
     ];
@@ -31,7 +33,7 @@ class Page extends Model
         return $this->hasMany(Touch::class, 'page_id');
     }
 
-    public function Text():BelongsTo{
-        return $this->belongsTo(Text::class, 'text_id');
+    public function Text():HasOne{
+        return $this->hasOne(Text::class, 'text_id');
     }
 }

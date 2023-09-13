@@ -17,7 +17,7 @@ class AudioFactory extends Factory
     public function definition(): array
     {
         return [
-            'text_id'=> fake()->numberBetween(1,20),
+            'text_id'=> fake()->numberBetween(1,10),
             'audio'=> 'https://audioSage.com/gal/'.fake()->city().'mp3',
         ];
     }

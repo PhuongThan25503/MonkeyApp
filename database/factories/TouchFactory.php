@@ -17,7 +17,7 @@ class TouchFactory extends Factory
     public function definition(): array
     {
         return [
-            'page_id'=>fake()->numberBetween(1,100),
+            'page_id'=>fake()->numberBetween(1,10),
             'text_id'=>fake()->numberBetween(1,100),
             'data'=>implode(',', fake()->localCoordinates),
         ];

@@ -13,6 +13,6 @@ class TextSeeder extends Seeder
      */
     public function run(): void
     {
-        Text::factory()->count(100)->create();
+        Text::factory()->count(10)->create();
     }
 }

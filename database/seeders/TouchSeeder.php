@@ -13,6 +13,6 @@ class TouchSeeder extends Seeder
      */
     public function run(): void
     {
-        Touch::factory()->count(100)->create();
+        Touch::factory()->count(10)->create();
     }
 }

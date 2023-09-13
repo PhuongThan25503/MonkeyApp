@@ -8,22 +8,27 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('page', function (Blueprint $table) {
-            $table->unsignedBigInteger('text_id');
+            $table->foreign(['story_id'])->references(['story_id'])->on('story');
             $table->foreign(['text_id'])->references(['text_id'])->on('text');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('page', function (Blueprint $table) {
-            //
+            $table->dropForeign('page_story_id_foreign');
+            $table->dropForeign('page_text_id_foreign');
         });
     }
 };

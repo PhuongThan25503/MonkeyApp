@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('story', function (Blueprint $table) {
-            $table->foreign(['author_id'])->references(['author_id'])->on('author');
-            $table->foreign(['type_id'])->references(['type_id'])->on('type');
+        Schema::table('user', function (Blueprint $table) {
+            $table->foreign(['role_id'])->references(['role_id'])->on('role');
         });
     }
 
@@ -26,9 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('story', function (Blueprint $table) {
-            $table->dropForeign('story_author_id_foreign');
-            $table->dropForeign('story_type_id_foreign');
+        Schema::table('user', function (Blueprint $table) {
+            $table->dropForeign('user_role_id_foreign');
         });
     }
 };

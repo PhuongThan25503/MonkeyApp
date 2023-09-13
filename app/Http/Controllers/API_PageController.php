@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Http\Controllers\Controller;
+use App\Models\Touch;
 use App\Repositories\PageRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -43,9 +44,11 @@ class API_PageController extends Controller
      */
     public function show($id)
     {
-        $Page = $this->PageRepository->getPageById($id);
-        if ($Page) { //exist
-            return response()->json($Page, 200);
+        $page = $this->PageRepository->getPageById($id);
+        if ($page) { //exist
+            return response()->json([
+                'page' => $page,
+            ], 200);
         } else {
             return response()->json([
                 'message' => 'not found Page'
@@ -122,8 +125,9 @@ class API_PageController extends Controller
         $page = $this->PageRepository->getPagesByStoryId($id);
         if ($page) {
             return response()->json(
-                $page
-            , 200);
+                $page,
+                200
+            );
         } else {
             return response()->json([
                 'message' => 'Page not found'

@@ -13,6 +13,6 @@ class TextConfigSeeder extends Seeder
      */
     public function run(): void
     {
-        TextConfig::factory()->count(100)->create();
+        TextConfig::factory()->count(10)->create();
     }
 }

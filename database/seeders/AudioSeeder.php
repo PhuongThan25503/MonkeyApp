@@ -13,6 +13,6 @@ class AudioSeeder extends Seeder
      */
     public function run(): void
     {
-        Audio::factory()->count(20)->create();
+        Audio::factory()->count(10)->create();
     }
 }

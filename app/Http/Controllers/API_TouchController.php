@@ -45,7 +45,7 @@ class API_TouchController extends Controller
     {
         $Touch = $this->TouchRepository->getTouchById($id);
         if($Touch){//exist
-            return response()->json($Touch, 200);
+            return response()->json(json_decode($Touch->data), 200);
         }
         else{
             return response()->json([

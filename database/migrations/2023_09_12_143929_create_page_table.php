@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('page', function (Blueprint $table) {
             $table->bigIncrements('page_id');
-            $table->unsignedBigInteger('story_id')->index('page_story_id_foreign');
-            $table->string('background');
+            $table->unsignedBigInteger('story_id')->nullable()->index('page_story_id_foreign');
+            $table->string('background')->nullable();
             $table->timestamps();
-            $table->integer('page_num');
+            $table->integer('page_num')->nullable();
+            $table->unsignedBigInteger('text_id')->nullable()->index('page_text_id_foreign');
         });
     }
 
