@@ -33,6 +33,8 @@ class API_AudioController extends Controller
         $Audio = new Audio();
         $Audio->audio = $request->audio;
         $Audio->text_id = $request->text_id;
+        $Audio->sync_data = $request->sync_data;
+        $Audio->duration = $request->duration;
         $this->AudioRepository->createAudio($Audio);
         return response($Audio,200);
     }

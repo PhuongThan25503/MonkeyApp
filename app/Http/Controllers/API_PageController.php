@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Http\Controllers\Controller;
+use App\Models\Story;
 use App\Models\Touch;
 use App\Repositories\PageRepositoryInterface;
+use Exception;
+use Faker\Test\Provider\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use PDO;
+use Symfony\Component\Console\Logger\ConsoleLogger;
+
+use function Laravel\Prompts\error;
 
 class API_PageController extends Controller
 {
@@ -122,10 +131,44 @@ class API_PageController extends Controller
      */
     public function getPagesbyStoryId($id)
     {
-        $page = $this->PageRepository->getPagesByStoryId($id);
-        if ($page) {
+        // Query the story model with its related page, text, audio, and touch_ models and convert it to an array
+        $story = Story::with(['Page.TextConfig.Audio','Page.TextConfig.Text', 'Page.Touch_.Text.Audio'])->find($id)->toArray(); // to array to display all info
+
+        // Loop through each page element in the story array
+        foreach ($story['page'] as $p_index => $p) {
+            // // Use a try-catch block to handle any possible errors
+            // try {
+            //     // Decode the sync_data attribute of the audio model from JSON to PHP object
+            //     $sync_data_raw = json_decode($p['text']['audio']['sync_data']);
+            //     // Assign the decoded value back to the sync_data attribute of the audio model in the array
+            //     $story['page'][$p_index]['text']['audio']['sync_data'] = $sync_data_raw;
+            // } catch (Exception $e) {
+            //     // Log the error message if any
+            //     Log::info($e);
+            // }
+
+            // Loop through each touch_ element in the page array
+            foreach ($p['touch_'] as $t_index => $t) {
+                // Use a try-catch block to handle any possible errors
+                try {
+                    // Decode the data attribute of the touch_ model from JSON to PHP object
+                    $data_raw = json_decode($t['data']);
+                    // Assign the decoded value back to the data attribute of the touch_ model in the array
+                    $story['page'][$p_index]['touch_'][$t_index]['data'] = $data_raw;
+                    //config position for the floating text
+                    $config_text_raw = json_decode($t['config']);
+                    //assign json decoded
+                    $story['page'][$p_index]['touch_'][$t_index]['config'] = $config_text_raw;
+                } catch (Exception $e) {
+                    // Log the error message if any
+                    Log::info($e);
+                }
+            }
+        }
+
+        if ($story) {
             return response()->json(
-                $page,
+                $story,
                 200
             );
         } else {

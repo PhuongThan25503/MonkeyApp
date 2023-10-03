@@ -15,6 +15,8 @@ class Audio extends Model
     protected $fillable = [
         'audio',
         'text_id',
+        'sync_data',
+        'duration',
     ];
 
     public function Text():BelongsTo{

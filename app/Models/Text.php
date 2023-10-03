@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Text extends Model
 {
@@ -13,6 +14,7 @@ class Text extends Model
     protected $table = 'text';
     protected $primaryKey = 'text_id';
     protected $fillable =[
+        'text_id',
         'text',
     ];
 
@@ -24,8 +26,11 @@ class Text extends Model
         return $this->hasMany(Touch::class, 'text_id');
     }
 
-    public function Audio() :HasMany{
-        return $this->hasMany(Audio::class, 'text_id');
+    public function Audio() :HasOne{
+        return $this->hasOne(Audio::class, 'text_id');
     }
 
+    public function Page() : BelongsTo{
+        return $this->belongsTo(Page::class, 'text_id');
+    }
 }

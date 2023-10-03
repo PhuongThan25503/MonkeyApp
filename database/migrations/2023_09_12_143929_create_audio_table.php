@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('audio', function (Blueprint $table) {
             $table->bigIncrements('audio_id');
-            $table->string('audio');
+            $table->text('audio');
             $table->timestamps();
             $table->unsignedBigInteger('text_id')->nullable()->index('audio_text_id_foreign');
         });

@@ -15,7 +15,6 @@ class Page extends Model
     protected $primaryKey='page_id';
     protected $fillable=[
         'story_id',
-        'text_id',
         'background',
         'page_num',
     ];
@@ -26,14 +25,10 @@ class Page extends Model
     }
 
     public function TextConfig():HasMany{
-        return $this->hasMany(TextConfig::class, 'page_id');
+        return $this->hasMany(TextConfig::class, 'page_id', 'page_id');
     }
 
     public function Touch_():HasMany{
         return $this->hasMany(Touch::class, 'page_id');
-    }
-
-    public function Text():HasOne{
-        return $this->hasOne(Text::class, 'text_id');
     }
 }
