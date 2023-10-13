@@ -27,7 +27,8 @@ class StoryRepository extends BaseRepository implements StoryRepositoryInterface
 
     public function getStoryById($id)
     {
-        return Story::find($id);
+        $story = Story::with('Author')->find($id);
+        return $story;
     }
 
     public function createStory($story)

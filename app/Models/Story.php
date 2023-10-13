@@ -27,7 +27,7 @@ class Story extends Model
     ];
 
     public function Author(): BelongsTo{ //one story belongs to one author
-        return $this->belongsTo(User::class, 'id'); //for default, it's author_id , but I still write for clearance
+        return $this->belongsTo(User::class, 'author_id'); //for default, it's author_id , but I still write for clearance
     }
 
     public function Type(): BelongsTo{
